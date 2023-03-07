@@ -1,13 +1,14 @@
 {
 	"name": "@fork-hu/raw-printer",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Print RAW",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
 	"type": "module",
 	"files": [
 		"lib/**/*",
-		"src/**/*.cc"
+		"src/**/*.cc",
+		"binding.gyp"
 	],
 	"scripts": {
 		"build": "node-gyp build && tsc",
