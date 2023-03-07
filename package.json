@@ -1,6 +1,6 @@
 {
 	"name": "@fork-hu/raw-printer",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Print RAW",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -8,13 +8,14 @@
 	"files": [
 		"lib/**/*",
 		"src/**/*.cc",
-		"binding.gyp"
+		"binding.gyp",
+		"prebuilds/**/*"
 	],
 	"scripts": {
 		"build": "node-gyp build && tsc",
 		"prepare": "npm run build",
 		"push": "npm run prepare && npm publish --access public",
-		"install": "node-gyp rebuild"
+		"install": "node-gyp-build"
 	},
 	"repository": {
 		"type": "git",
@@ -32,6 +33,7 @@
 	},
 	"dependencies": {
 		"bindings": "^1.5.0",
-		"nan": "^2.17.0"
+		"nan": "^2.17.0",
+		"node-gyp-build": "^4.6.0"
 	}
 }
