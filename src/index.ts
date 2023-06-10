@@ -7,8 +7,8 @@ const __dirname = path.join(path.dirname(__filename), "..")
 
 const binding = bindings(__dirname)
 
-const PrintRaw = (printer: string, data: string) => {
-	binding.printRaw(printer, data)
+const PrintRaw = (printer: string, documentName: string, data: string) => {
+	binding.printRaw(printer, documentName, data, data.length)
 }
 
 export { PrintRaw }

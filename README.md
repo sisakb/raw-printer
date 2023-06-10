@@ -19,7 +19,7 @@ pnpm add @fork-hu/raw-printer
 ```typescript
 import { PrintRaw } from "@fork-hu/raw-printer"
 
-PrintRaw("Printer Name", "String to print")
+PrintRaw("EPSON TM-T70II Receipt", "My document", "Hello World!")
 ```
 
 ## API Description
@@ -27,7 +27,7 @@ PrintRaw("Printer Name", "String to print")
 ### `PrintRaw` function
 
 ```typescript
-function PrintRaw(printer: string, data: string): void
+function PrintRaw(printer: string, documentName: string, data: string): void
 ```
 
 The `printer` parameter should be the exact name of the printer driver as shown in Windows.
@@ -50,5 +50,5 @@ const CUT = GS + "V" + "\x01"
 
 // Prints "Hello!", feeds one row and cuts the paper
 const data = "Hello!\n" + CUT
-PrintRaw("EPSON TM-T70II", data)
+PrintRaw("EPSON TM-T70II", "Test document", data)
 ```

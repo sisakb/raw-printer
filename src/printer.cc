@@ -1,7 +1,7 @@
 #include <nan.h>
 #include "windows.h"
 
-BOOL RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWORD dwCount)
+BOOL RawDataToPrinter(LPSTR szPrinterName, LPSTR documentName, LPBYTE lpData, DWORD dwCount)
 {
 	HANDLE hPrinter;
 	DOC_INFO_1 DocInfo;
@@ -13,7 +13,7 @@ BOOL RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWORD dwCount)
 		return FALSE;
 
 	// Fill in the structure with info about this "document."
-	DocInfo.pDocName = "My Document";
+	DocInfo.pDocName = documentName;
 	DocInfo.pOutputFile = NULL;
 	DocInfo.pDatatype = "RAW";
 	// Inform the spooler the document is beginning.
@@ -61,13 +61,13 @@ BOOL RawDataToPrinter(LPSTR szPrinterName, LPBYTE lpData, DWORD dwCount)
 void PrintRaw(const Nan::FunctionCallbackInfo<v8::Value> &info)
 {
 
-	if (info.Length() < 2)
+	if (info.Length() < 4)
 	{
 		Nan::ThrowTypeError("Wrong number of arguments");
 		return;
 	}
 
-	if (!info[0]->IsString() || !info[1]->IsString())
+	if (!info[0]->IsString() || !info[1]->IsString() || !info[2]->IsString() || !info[3]->IsNumber())
 	{
 		Nan::ThrowTypeError("Wrong arguments");
 		return;
@@ -77,10 +77,13 @@ void PrintRaw(const Nan::FunctionCallbackInfo<v8::Value> &info)
 
 	v8::String::Utf8Value printer_v8(isolate, info[0]);
 	const char *printer = *printer_v8;
-	v8::String::Utf8Value data_v8(isolate, info[1]);
-	const char *data = *data_v8;
+	v8::String::Utf8Value docname_v8(isolate, info[1]);
+	const char *docname = *docname_v8;
+	v8::String::Utf8Value data_v8(isolate, info[2]);
+	char *data = *data_v8;
+	int length = info[3]->NumberValue(isolate->GetCurrentContext()).FromJust();
 
-	RawDataToPrinter((LPSTR)printer, (LPBYTE)data, strlen(data));
+	RawDataToPrinter((LPSTR)printer, (LPSTR)docname, (LPBYTE)data, length);
 	info.GetReturnValue().Set(true);
 }
 
